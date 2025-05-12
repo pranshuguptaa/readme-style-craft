@@ -1,24 +1,19 @@
 
-import { Github } from "lucide-react";
+import { Code2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
   return (
-    <header className="border-b border-border sticky top-0 z-50 w-full bg-background/80 backdrop-blur-md">
+    <header className="border-b border-white/10 sticky top-0 z-50 w-full bg-black/60 backdrop-blur-lg">
       <div className="container flex h-16 items-center justify-between px-4 md:px-6">
         <div className="flex items-center gap-2">
-          <Github className="h-6 w-6" />
-          <h1 className="text-xl font-semibold">GitHub Profile Generator</h1>
+          <div className="flex items-center justify-center h-8 w-8 rounded-md bg-purple/20 border border-purple/30">
+            <Code2 className="h-5 w-5 text-purple-light" />
+          </div>
+          <h1 className="text-xl font-semibold text-white">ReadmeCraft</h1>
         </div>
         <div className="flex items-center gap-4">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => window.open("https://github.com/", "_blank")}
-          >
-            <Github className="mr-2 h-4 w-4" />
-            View on GitHub
-          </Button>
+          {/* GitHub button removed as requested */}
         </div>
       </div>
     </header>

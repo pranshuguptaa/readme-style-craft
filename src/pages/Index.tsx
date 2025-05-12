@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowRight, Copy, Github, Check } from "lucide-react";
+import { ArrowRight, Copy, Check, Code2 } from "lucide-react";
 import { toast } from "sonner";
 
 import Navbar from "@/components/Navbar";
@@ -69,43 +69,46 @@ const Index = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-background">
+    <div className="flex flex-col min-h-screen bg-black text-white relative overflow-hidden">
+      {/* Floating dots background */}
+      <div className="dot dot-1"></div>
+      <div className="dot dot-2"></div>
+      <div className="dot dot-3"></div>
+      <div className="dot dot-4"></div>
+      <div className="dot dot-5"></div>
+
       <Navbar />
 
-      <main className="flex-1 container py-8">
+      <main className="flex-1 container py-8 relative z-10">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-10 animate-fade-in">
-            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple to-blue bg-clip-text text-transparent mb-4">
-              GitHub Profile README Generator
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground mb-6">
+          <div className="text-center mb-10 animate-fade-in relative z-10">
+            <div className="flex items-center justify-center mb-4">
+              <div className="flex items-center justify-center h-12 w-12 rounded-xl bg-purple/20 border border-purple/30 mr-3">
+                <Code2 className="h-7 w-7 text-purple-light" />
+              </div>
+              <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-light via-blue-light to-purple bg-clip-text text-transparent">
+                ReadmeCraft
+              </h1>
+            </div>
+            <p className="text-lg md:text-xl text-gray-300 mb-6">
               Create a stunning GitHub profile README in minutes
             </p>
-            <div className="flex items-center justify-center gap-4">
-              <Button
-                variant="outline"
-                onClick={() => window.open("https://github.com/", "_blank")}
-              >
-                <Github className="mr-2 h-4 w-4" />
-                View on GitHub
-              </Button>
-            </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div>
-              <Card className="shadow-md border card-hover-effect">
+              <Card className="glassmorphism shadow-lg border-0">
                 <CardHeader>
-                  <CardTitle>Editor</CardTitle>
-                  <CardDescription>Fill in your information to generate your GitHub README</CardDescription>
+                  <CardTitle className="text-white">Editor</CardTitle>
+                  <CardDescription className="text-gray-300">Fill in your information to generate your GitHub README</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <Tabs defaultValue="personal" className="space-y-4">
-                    <TabsList className="grid grid-cols-4 w-full">
-                      <TabsTrigger value="personal">Personal</TabsTrigger>
-                      <TabsTrigger value="social">Social</TabsTrigger>
-                      <TabsTrigger value="skills">Skills</TabsTrigger>
-                      <TabsTrigger value="stats">Stats</TabsTrigger>
+                    <TabsList className="grid grid-cols-4 w-full bg-white/10 border-white/10">
+                      <TabsTrigger value="personal" className="data-[state=active]:bg-white/20">Personal</TabsTrigger>
+                      <TabsTrigger value="social" className="data-[state=active]:bg-white/20">Social</TabsTrigger>
+                      <TabsTrigger value="skills" className="data-[state=active]:bg-white/20">Skills</TabsTrigger>
+                      <TabsTrigger value="stats" className="data-[state=active]:bg-white/20">Stats</TabsTrigger>
                     </TabsList>
                     
                     <TabsContent value="personal" className="space-y-4">
@@ -129,41 +132,39 @@ const Index = () => {
             </div>
 
             <div>
-              <Card className="shadow-md border gradient-border">
-                <div className="bg-background p-0.5 rounded-xl">
-                  <CardHeader className="bg-card rounded-t-xl">
-                    <div className="flex items-center justify-between">
-                      <CardTitle>Preview</CardTitle>
-                      <Button 
-                        variant="outline" 
-                        size="sm"
-                        onClick={copyMarkdown}
-                        className="flex items-center gap-2"
-                      >
-                        {copying ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-                        {copying ? "Copied!" : "Copy Markdown"}
-                      </Button>
-                    </div>
-                    <CardDescription>Live preview of your GitHub README</CardDescription>
-                  </CardHeader>
-                  <CardContent className="bg-card rounded-b-xl pt-6">
-                    <MarkdownPreview 
-                      personal={personal} 
-                      socials={socials} 
-                      skills={selectedSkills}
-                      stats={stats}
-                    />
-                  </CardContent>
-                </div>
+              <Card className="glassmorphism shadow-lg border-0">
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-white">Preview</CardTitle>
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={copyMarkdown}
+                      className="flex items-center gap-2 bg-white/10 border-white/20 hover:bg-white/20"
+                    >
+                      {copying ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                      {copying ? "Copied!" : "Copy Markdown"}
+                    </Button>
+                  </div>
+                  <CardDescription className="text-gray-300">Live preview of your GitHub README</CardDescription>
+                </CardHeader>
+                <CardContent className="pt-6">
+                  <MarkdownPreview 
+                    personal={personal} 
+                    socials={socials} 
+                    skills={selectedSkills}
+                    stats={stats}
+                  />
+                </CardContent>
               </Card>
             </div>
           </div>
 
-          <div className="mt-12 text-center">
-            <h2 className="text-2xl font-semibold mb-4">Ready to showcase your GitHub profile?</h2>
+          <div className="mt-12 text-center relative z-10">
+            <h2 className="text-2xl font-semibold mb-4 text-white">Ready to showcase your GitHub profile?</h2>
             <Button 
               size="lg" 
-              className="bg-gradient-to-r from-purple to-blue hover:opacity-90 transition-opacity"
+              className="bg-gradient-to-r from-purple to-blue-dark hover:opacity-90 transition-opacity"
               onClick={copyMarkdown}
             >
               Generate & Copy README <ArrowRight className="ml-2 h-4 w-4" />
@@ -172,15 +173,10 @@ const Index = () => {
         </div>
       </main>
 
-      <footer className="border-t py-6">
+      <footer className="border-t border-white/10 py-6 relative z-10">
         <div className="container flex flex-col md:flex-row items-center justify-between text-center md:text-left space-y-4 md:space-y-0">
-          <div className="text-muted-foreground text-sm">
-            © {new Date().getFullYear()} GitHub Profile README Generator. Made with ❤️.
-          </div>
-          <div className="flex items-center space-x-4">
-            <a href="https://github.com/" className="text-muted-foreground hover:text-foreground transition-colors">
-              <Github className="h-5 w-5" />
-            </a>
+          <div className="text-gray-400 text-sm">
+            © {new Date().getFullYear()} ReadmeCraft. Made with ❤️.
           </div>
         </div>
       </footer>
