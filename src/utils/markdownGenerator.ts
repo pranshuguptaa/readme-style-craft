@@ -153,9 +153,22 @@ export function generateMarkdown({
   if (skills.length > 0) {
     markdown += `## Languages and Tools\n<p align="left">\n`;
     
+    // Try to get custom skills from localStorage if available
+    let customSkillsMap = {};
+    try {
+      customSkillsMap = JSON.parse(localStorage.getItem('customSkills') || '{}');
+    } catch (error) {
+      console.error('Failed to parse custom skills:', error);
+    }
+    
     skills.forEach(skill => {
-      // Use direct icon URLs from our mapping to ensure they display correctly
-      const iconUrl = SKILL_ICON_MAP[skill] || DEFAULT_SKILL_ICON;
+      // First check if it's a custom skill with URL
+      // @ts-ignore (handling customSkillsMap safely)
+      const customUrl = customSkillsMap[skill];
+      // Then check our predefined map
+      const mappedUrl = SKILL_ICON_MAP[skill];
+      // Use the first available icon or the default
+      const iconUrl = customUrl || mappedUrl || DEFAULT_SKILL_ICON;
       
       markdown += `<a href="#" target="_blank" rel="noreferrer"> 
   <img src="${iconUrl}" alt="${skill}" width="40" height="40"/> 

@@ -38,15 +38,28 @@ const SkillsSelector = ({ selectedSkills, setSelectedSkills }: SkillsSelectorPro
     }
 
     // Check if skill already exists
-    if (selectedSkills.includes(customSkill)) {
+    if (selectedSkills.includes(customSkill.trim())) {
       toast.error('This skill is already in your list');
       return;
     }
 
-    setSelectedSkills(prev => [...prev, customSkill]);
+    // Add the custom skill
+    setSelectedSkills(prev => [...prev, customSkill.trim()]);
+    
+    // Store the custom skill URL if provided in local storage for future reference
+    if (customSkillUrl.trim()) {
+      try {
+        const customSkillsMap = JSON.parse(localStorage.getItem('customSkills') || '{}');
+        customSkillsMap[customSkill.trim()] = customSkillUrl.trim();
+        localStorage.setItem('customSkills', JSON.stringify(customSkillsMap));
+      } catch (error) {
+        console.error('Failed to store custom skill URL:', error);
+      }
+    }
+    
     setCustomSkill('');
     setCustomSkillUrl('');
-    toast.success(`Added ${customSkill} to your skills`);
+    toast.success(`Added ${customSkill.trim()} to your skills`);
   };
 
   return (
@@ -130,11 +143,19 @@ const SkillsSelector = ({ selectedSkills, setSelectedSkills }: SkillsSelectorPro
                     <Check className="w-3 h-3" />
                   )}
                   <span className="flex items-center">
-                    <img 
-                      src={skill.icon} 
-                      alt={skill.name} 
-                      className="w-4 h-4 mr-1" 
-                    />
+                    {skill.icon && (
+                      <img 
+                        src={skill.icon} 
+                        alt={skill.name} 
+                        className="w-4 h-4 mr-1" 
+                        onError={(e) => {
+                          // Handle image loading errors
+                          const target = e.target as HTMLImageElement;
+                          target.onerror = null;
+                          target.style.display = 'none';
+                        }}
+                      />
+                    )}
                     {skill.name}
                   </span>
                 </Badge>
