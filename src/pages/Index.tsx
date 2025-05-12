@@ -70,7 +70,7 @@ const Index = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-black text-white relative overflow-hidden">
-      {/* Floating dots background */}
+      {/* Floating dots background - visible */}
       <div className="dot dot-1"></div>
       <div className="dot dot-2"></div>
       <div className="dot dot-3"></div>

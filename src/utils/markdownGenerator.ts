@@ -36,6 +36,52 @@ interface MarkdownGeneratorProps {
   };
 }
 
+// Mapping of skills to their direct icon URLs to ensure they display correctly
+const SKILL_ICON_MAP: Record<string, string> = {
+  "JavaScript": "https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg",
+  "TypeScript": "https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg",
+  "React": "https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg",
+  "Vue": "https://raw.githubusercontent.com/devicons/devicon/master/icons/vuejs/vuejs-original.svg",
+  "Angular": "https://raw.githubusercontent.com/devicons/devicon/master/icons/angularjs/angularjs-original.svg",
+  "Node.js": "https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original.svg",
+  "Python": "https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg",
+  "Java": "https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg",
+  "C#": "https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg",
+  "PHP": "https://raw.githubusercontent.com/devicons/devicon/master/icons/php/php-original.svg",
+  "Go": "https://raw.githubusercontent.com/devicons/devicon/master/icons/go/go-original.svg",
+  "Ruby": "https://raw.githubusercontent.com/devicons/devicon/master/icons/ruby/ruby-original.svg",
+  "HTML5": "https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg",
+  "CSS3": "https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original.svg",
+  "Sass": "https://raw.githubusercontent.com/devicons/devicon/master/icons/sass/sass-original.svg",
+  "Bootstrap": "https://raw.githubusercontent.com/devicons/devicon/master/icons/bootstrap/bootstrap-plain.svg",
+  "TailwindCSS": "https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg",
+  "MongoDB": "https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original.svg",
+  "MySQL": "https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original.svg",
+  "PostgreSQL": "https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original.svg",
+  "Redis": "https://raw.githubusercontent.com/devicons/devicon/master/icons/redis/redis-original.svg",
+  "Docker": "https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original.svg",
+  "Kubernetes": "https://www.vectorlogo.zone/logos/kubernetes/kubernetes-icon.svg",
+  "AWS": "https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-original.svg",
+  "Azure": "https://www.vectorlogo.zone/logos/microsoft_azure/microsoft_azure-icon.svg",
+  "GCP": "https://www.vectorlogo.zone/logos/google_cloud/google_cloud-icon.svg",
+  "Git": "https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg",
+  "GitHub": "https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg",
+  "GitLab": "https://www.vectorlogo.zone/logos/gitlab/gitlab-icon.svg",
+  "Firebase": "https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg",
+  "Flutter": "https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg",
+  "Swift": "https://raw.githubusercontent.com/devicons/devicon/master/icons/swift/swift-original.svg",
+  "Kotlin": "https://www.vectorlogo.zone/logos/kotlinlang/kotlinlang-icon.svg",
+  "Dart": "https://www.vectorlogo.zone/logos/dartlang/dartlang-icon.svg",
+  "Figma": "https://www.vectorlogo.zone/logos/figma/figma-icon.svg",
+  "Adobe XD": "https://cdn.worldvectorlogo.com/logos/adobe-xd.svg",
+  "Sketch": "https://www.vectorlogo.zone/logos/sketchapp/sketchapp-icon.svg",
+  "Illustrator": "https://www.vectorlogo.zone/logos/adobe_illustrator/adobe_illustrator-icon.svg",
+  "Photoshop": "https://raw.githubusercontent.com/devicons/devicon/master/icons/photoshop/photoshop-plain.svg",
+};
+
+// Fallback icons for custom skills
+const DEFAULT_SKILL_ICON = "https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/terminal/terminal.png";
+
 export function generateMarkdown({ 
   personal, 
   socials, 
@@ -108,9 +154,12 @@ export function generateMarkdown({
     markdown += `## Languages and Tools\n<p align="left">\n`;
     
     skills.forEach(skill => {
+      // Use direct icon URLs from our mapping to ensure they display correctly
+      const iconUrl = SKILL_ICON_MAP[skill] || DEFAULT_SKILL_ICON;
+      
       markdown += `<a href="#" target="_blank" rel="noreferrer"> 
-        <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/${skill.toLowerCase()}/${skill.toLowerCase()}-original.svg" alt="${skill}" width="40" height="40"/> 
-      </a> `;
+  <img src="${iconUrl}" alt="${skill}" width="40" height="40"/> 
+</a> `;
     });
     
     markdown += `\n</p>\n\n`;

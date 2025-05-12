@@ -1,10 +1,12 @@
 
 import React, { useState } from 'react';
-import { Check, Search } from 'lucide-react';
+import { Check, Search, Plus } from 'lucide-react';
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "@/components/ui/button";
 import { SKILLS_DATA } from '@/data/skills';
+import { toast } from 'sonner';
 
 interface SkillsSelectorProps {
   selectedSkills: string[];
@@ -13,6 +15,8 @@ interface SkillsSelectorProps {
 
 const SkillsSelector = ({ selectedSkills, setSelectedSkills }: SkillsSelectorProps) => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [customSkill, setCustomSkill] = useState('');
+  const [customSkillUrl, setCustomSkillUrl] = useState('');
 
   const filteredSkills = searchQuery
     ? SKILLS_DATA.filter(skill => 
@@ -27,6 +31,24 @@ const SkillsSelector = ({ selectedSkills, setSelectedSkills }: SkillsSelectorPro
     }
   };
 
+  const addCustomSkill = () => {
+    if (!customSkill.trim()) {
+      toast.error('Please enter a skill name');
+      return;
+    }
+
+    // Check if skill already exists
+    if (selectedSkills.includes(customSkill)) {
+      toast.error('This skill is already in your list');
+      return;
+    }
+
+    setSelectedSkills(prev => [...prev, customSkill]);
+    setCustomSkill('');
+    setCustomSkillUrl('');
+    toast.success(`Added ${customSkill} to your skills`);
+  };
+
   return (
     <div className="space-y-4">
       <div className="relative">
@@ -38,6 +60,32 @@ const SkillsSelector = ({ selectedSkills, setSelectedSkills }: SkillsSelectorPro
           onChange={(e) => setSearchQuery(e.target.value)}
           className="pl-8"
         />
+      </div>
+      
+      {/* Custom Skill Section */}
+      <div className="p-4 border border-white/10 rounded-md bg-white/5">
+        <h4 className="text-sm font-medium mb-3">Add Custom Skill</h4>
+        <div className="flex flex-col space-y-3">
+          <Input
+            type="text"
+            placeholder="Skill name (e.g. React Native)"
+            value={customSkill}
+            onChange={(e) => setCustomSkill(e.target.value)}
+          />
+          <Input
+            type="text"
+            placeholder="Icon URL (optional)"
+            value={customSkillUrl}
+            onChange={(e) => setCustomSkillUrl(e.target.value)}
+          />
+          <Button 
+            onClick={addCustomSkill} 
+            variant="outline"
+            className="flex items-center gap-2 bg-white/10 hover:bg-white/20 w-full"
+          >
+            <Plus className="h-4 w-4" /> Add Custom Skill
+          </Button>
+        </div>
       </div>
       
       <div>
